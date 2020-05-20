@@ -86,7 +86,7 @@ def get_all_emails_of_a_user(username: str, repo_name: str) -> Dict[str, Set[str
 
             if 'API rate limit exceeded for ' in result_dict['message']:
                 warning('API rate limit exceeded - not all repos where fetched')
-                break
+                return emails_to_name
 
         for commit_dict in result_dict:
             sha = commit_dict['sha']
@@ -101,7 +101,7 @@ def get_all_emails_of_a_user(username: str, repo_name: str) -> Dict[str, Set[str
             if commit_dict['author'] is None:
                 continue
             user = commit_dict['author']['login']
-            if user == username:
+            if user.lower() == username.lower():
                 commit = commit_dict['commit']
                 author_name = commit['author']['name']
                 author_email = commit['author']['email']
@@ -159,21 +159,27 @@ def main():
         info('Found {} public repositories'.format(len(repos_to_scan)))
 
     emails_to_name = defaultdict(set)
-    for repo in repos_to_scan:
-        info('Scan repository {}'.format(repo))
-        emails_to_name_new = get_all_emails_of_a_user(username=parsed_arguments.user, repo_name=repo)
-        for email, names in emails_to_name_new.items():
-            emails_to_name[email].update(names)
+    try:
+        for repo in repos_to_scan:
+            info('Scan repository {}'.format(repo))
+            emails_to_name_new = get_all_emails_of_a_user(username=parsed_arguments.user, repo_name=repo)
+            for email, names in emails_to_name_new.items():
+                emails_to_name[email].update(names)
+    except KeyboardInterrupt:
+        warning('Keyboard interrupt. Stopped scanning.')
 
-    max_width_email = max([len(x) for x in emails_to_name.keys()])
-    info('Exposed emails and names:')
-    for email, names in emails_to_name.items():
-        names_string = ''
-        for i, n in enumerate(names):
-            names_string += colorize_string(n, Color.BLUE)
-            if i < len(names) - 1:
-                names_string += '; '
-        print('\t', colorize_string(email.ljust(max_width_email), Color.RED) + ' - ' + names_string)
+    if len(emails_to_name) > 0:
+        max_width_email = max([len(x) for x in emails_to_name.keys()])
+        info('Exposed emails and names:')
+        for email, names in emails_to_name.items():
+            names_string = ''
+            for i, n in enumerate(names):
+                names_string += colorize_string(n, Color.BLUE)
+                if i < len(names) - 1:
+                    names_string += '; '
+            print('\t', colorize_string(email.ljust(max_width_email), Color.RED) + ' - ' + names_string)
+    else:
+        info('No emails found')
 
 
 if __name__ == '__main__':
