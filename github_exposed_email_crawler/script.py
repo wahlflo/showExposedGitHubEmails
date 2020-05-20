@@ -130,6 +130,7 @@ def main():
     parser.add_argument('-v', '--verbose', dest="verbose", help="verbose mode", action='store_true', default=False)
     parser.add_argument('-d', '--delay', dest="delay", help="The delay between to requests in seconds", type=int, default=None)
     parser.add_argument('--api-url', dest="api_url", help='Specify the URL to the GitHub Api (default is "{}")'.format(API_URL), type=str, default=None)
+    parser.add_argument('--no-forks', dest="no_forks", help='Ignore forked repositories', action='store_true', default=False)
 
     parsed_arguments = parser.parse_args()
 
@@ -155,7 +156,7 @@ def main():
     else:
         info('Scan for public repositories of user {}'.format(parsed_arguments.user))
         repos_to_scan_sorted = sorted(get_all_repositories_of_a_user(username=parsed_arguments.user), key=lambda x: x.is_fork)
-        repos_to_scan = [x.name for x in repos_to_scan_sorted]
+        repos_to_scan = [x.name for x in repos_to_scan_sorted if (parsed_arguments.no_forks and not x.is_fork) or not parsed_arguments.no_forks]
         info('Found {} public repositories'.format(len(repos_to_scan)))
 
     emails_to_name = defaultdict(set)

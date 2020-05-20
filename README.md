@@ -11,7 +11,7 @@ Install the package with pip
 Type ```showExposedGitHubEmails  --help``` to view the help.
 
 ```
-usage: lad [OPTION]... -u USERNAME
+usage: showExposedGitHubEmails [OPTION]... -u USERNAME
 
 Lists information about the FILEs (the current directory by default) including Alternate Data Streams.
 
@@ -26,6 +26,7 @@ optional arguments:
   -d DELAY, --delay DELAY
                         The delay between to requests in seconds
   --api-url API_URL     Specify the URL to the GitHub Api (default is "https://api.github.com")
+  --no-forks            Ignore forked repositories
 ```
 
 ## Example
