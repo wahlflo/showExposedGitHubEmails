@@ -48,9 +48,13 @@ def get_all_repositories_of_a_user(username: str) -> List[Repository]:
         url = '{}/users/{}/repos?per_page=100&page={}'.format(API_URL, username, page_counter)
         result_dict = __api_call(url=url)
 
-        if 'message' in result_dict and 'API rate limit exceeded for ' in result_dict['message']:
-            warning('API rate limit exceeded - not all repos where fetched')
-            break
+        if 'message' in result_dict:
+            if 'API rate limit exceeded for ' in result_dict['message']:
+                warning('API rate limit exceeded - not all repos where fetched')
+                break
+            if result_dict['message'] == 'Not Found':
+                warning('There is no user with the username "{}"'.format(username))
+                break
 
         for repository in result_dict:
             repo_name = repository['name']
@@ -86,6 +90,10 @@ def get_all_emails_of_a_user(username: str, repo_name: str) -> Dict[str, Set[str
 
             if 'API rate limit exceeded for ' in result_dict['message']:
                 warning('API rate limit exceeded - not all repos where fetched')
+                return emails_to_name
+
+            if result_dict['message'] == 'Not Found':
+                warning('There is no repository with the name "{}"'.format(repo_name))
                 return emails_to_name
 
         for commit_dict in result_dict:
