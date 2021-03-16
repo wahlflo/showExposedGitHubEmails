@@ -131,7 +131,7 @@ def __api_call(url) -> dict:
 
 
 def main():
-    parser = argparse.ArgumentParser(usage='lad [OPTION]... -u USERNAME', description='Lists information about the FILEs (the current directory by default) including Alternate Data Streams.')
+    parser = argparse.ArgumentParser(usage='showExposedGitHubEmails [OPTION]... -u USERNAME', description='Lists information about the FILEs (the current directory by default) including Alternate Data Streams.')
     parser.add_argument('-u', '--user', dest="user", help="Username of the user which public repositories should be scanned", type=str)
     parser.add_argument('-r', '--repository', dest='repository', help="check only one specific repository", type=str)
     parser.add_argument('-t', '--token', dest='token', help="Paste a GitHub token her to increase the API quota", type=str)
