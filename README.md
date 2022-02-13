@@ -1,5 +1,5 @@
 # showExposedGitHubEmails
-A crawler who lists all emails used by one person in github using the GitHup API.
+A crawler who lists all emails used by one person in github using the GitHub API.
 
 ## Installation
 
