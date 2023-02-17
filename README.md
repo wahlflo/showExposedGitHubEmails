@@ -1,5 +1,7 @@
 # showExposedGitHubEmails
-A crawler who lists all emails used by one person in github using the GitHup API.
+Is a crawler which lists all email addresses used in commits of a specific GitHub user using the GitHub API.
+
+It iterates through all public respositories owned by the user and all commits in each of these repositories.  
 
 ## Installation
 
@@ -13,20 +15,21 @@ Type ```showExposedGitHubEmails  --help``` to view the help.
 ```
 usage: showExposedGitHubEmails [OPTION]... -u USERNAME
 
-Lists information about the FILEs (the current directory by default) including Alternate Data Streams.
+A crawler which lists all email addresses used in commits of a specific GitHub user using the GitHub API.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -u USER, --user USER  Username of the user which public repositories should be scanned
+  -u USER, --user USER  username of the user whose public repositories should be scanned
   -r REPOSITORY, --repository REPOSITORY
-                        check only one specific repository
+                        name of specific repository which should be scanned (default is all repositories)
   -t TOKEN, --token TOKEN
-                        Paste a GitHub token her to increase the API quota
+                        provide a GitHub token to increase the API quota which can be used by this script
   -v, --verbose         verbose mode
   -d DELAY, --delay DELAY
-                        The delay between to requests in seconds
-  --api-url API_URL     Specify the URL to the GitHub Api (default is "https://api.github.com")
-  --no-forks            Ignore forked repositories
+                        the delay between to requests in seconds (default is 1 second)
+  --api-url API_URL     specify the URL to the GitHub Api (default is "https://api.github.com")
+  --no-forks            ignore forked repositories
+
 ```
 
 ## Example

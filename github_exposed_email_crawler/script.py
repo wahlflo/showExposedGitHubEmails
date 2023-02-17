@@ -131,14 +131,14 @@ def __api_call(url) -> dict:
 
 
 def main():
-    parser = argparse.ArgumentParser(usage='showExposedGitHubEmails [OPTION]... -u USERNAME', description='Lists information about the FILEs (the current directory by default) including Alternate Data Streams.')
-    parser.add_argument('-u', '--user', dest="user", help="Username of the user which public repositories should be scanned", type=str)
-    parser.add_argument('-r', '--repository', dest='repository', help="check only one specific repository", type=str)
-    parser.add_argument('-t', '--token', dest='token', help="Paste a GitHub token her to increase the API quota", type=str)
+    parser = argparse.ArgumentParser(usage='showExposedGitHubEmails [OPTION]... -u USERNAME', description='A crawler which lists all email addresses used in commits of a specific GitHub user using the GitHub API.')
+    parser.add_argument('-u', '--user', dest="user", help="username of the user whose public repositories should be scanned", type=str)
+    parser.add_argument('-r', '--repository', dest='repository', help="name of specific repository which should be scanned (default is all repositories)", type=str)
+    parser.add_argument('-t', '--token', dest='token', help="provide a GitHub token to increase the API quota which can be used by this script", type=str)
     parser.add_argument('-v', '--verbose', dest="verbose", help="verbose mode", action='store_true', default=False)
-    parser.add_argument('-d', '--delay', dest="delay", help="The delay between to requests in seconds", type=int, default=None)
-    parser.add_argument('--api-url', dest="api_url", help='Specify the URL to the GitHub Api (default is "{}")'.format(API_URL), type=str, default=None)
-    parser.add_argument('--no-forks', dest="no_forks", help='Ignore forked repositories', action='store_true', default=False)
+    parser.add_argument('-d', '--delay', dest="delay", help="the delay between to requests in seconds (default is 1 second)", type=int, default=None)
+    parser.add_argument('--api-url', dest="api_url", help='specify the URL to the GitHub Api (default is "{}")'.format(API_URL), type=str, default=None)
+    parser.add_argument('--no-forks', dest="no_forks", help='ignore forked repositories', action='store_true', default=False)
 
     parsed_arguments = parser.parse_args()
 
