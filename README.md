@@ -3,6 +3,7 @@ Is a crawler which lists all email addresses used in commits of a specific GitHu
 
 It iterates through all public respositories owned by the user and all commits in each of these repositories.  
 
+
 ## Installation
 
 Install the package with pip
