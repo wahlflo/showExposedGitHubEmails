@@ -86,7 +86,7 @@ def get_all_emails_of_a_user(username: str, repo_name: str) -> Dict[str, Set[str
         if 'message' in result_dict:
             if result_dict['message'] == 'Git Repository is empty.':
                 info('Git repository is empty', verbosity_level=5)
-                continue
+                break 
 
             if 'API rate limit exceeded for ' in result_dict['message']:
                 warning('API rate limit exceeded - not all repos where fetched')
