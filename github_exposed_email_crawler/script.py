@@ -50,7 +50,7 @@ def get_all_repositories_of_a_user(username: str) -> List[Repository]:
 
         if 'message' in result_dict:
             if 'API rate limit exceeded for ' in result_dict['message']:
-                warning('API rate limit exceeded - not all repos where fetched')
+                warning('API rate limit exceeded - not all repos were fetched')
                 break
             if result_dict['message'] == 'Not Found':
                 warning('There is no user with the username "{}"'.format(username))
